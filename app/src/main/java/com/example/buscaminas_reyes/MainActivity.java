@@ -3,7 +3,6 @@ package com.example.buscaminas_reyes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -11,10 +10,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.alerta();
-        TextView campo = new TextView(getApplicationContext());
-
-
 
     }
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Instrucciones");
         builder.setMessage("Para ganar debes seguir las reglas del buscaminas normal, es decir, intenta descubrir el tablero sin explotar ninguna mina!");
         builder.setPositiveButton("De Acuerdo!", null);
+
+
 
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -52,15 +56,24 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
                         // of the selected item
+                       TableLayout grid = findViewById(R.id.grid);
                         switch (which) {
                             case 0:
                                 Toast.makeText(context, "Dificultad elegida: 8x8", Toast.LENGTH_SHORT).show();
+
+                                tablero(8);
+
                                 break;
                             case 1:
                                 Toast.makeText(context, "Dificultad elegida: 12x12", Toast.LENGTH_SHORT).show();
+                                tablero(12);
+
                                 break;
+
                             case 2:
                                 Toast.makeText(context, "Dificultad elegida: 16x16", Toast.LENGTH_SHORT).show();
+                                tablero(16);
+
                                 break;
                         }
                     }
@@ -77,4 +90,81 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void tablero(int tam){
+        Button[][] botones = new Button[tam][tam];
+        TableLayout grid = findViewById(R.id.grid);
+        grid.removeAllViews();
+
+        for (int i = 0; i <tam; i++){
+            TableRow fila = new TableRow(this);
+            fila.setLayoutParams(new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.WRAP_CONTENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT,
+                    1.0f));
+
+            for (int j = 0; j <tam; j++){
+                botones[i][j] = new Button(this);
+
+                botones[i][j].setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        1.0f));
+                botones[i][j].setMinHeight(0);
+                botones[i][j].setPadding(0, 0, 0, 0);
+                botones[i][j].setMinWidth(0);
+                botones[i][j].setText("");
+                botones[i][j].setId(0);
+                int finalI = i;
+                int finalJ = j;
+                botones[i][j].setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        int idbot = botones[finalI][finalJ].getId();
+                        if ((idbot==-1)){
+                            Context context = getApplicationContext();
+                            CharSequence text = "Hello toast!";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        } else {
+
+                        }
+
+                    }
+                });
+                fila.addView(botones[i][j]);
+
+            }
+
+            grid.addView(fila);
+        }
+        if (tam==8) {
+            for (int i = 0; i<10; i++) {
+                Random r = new Random();
+                int coordY = r.nextInt(((tam)-1)+1);
+                int coordX = r.nextInt(((tam)-1)+1);
+                botones[coordX][coordY].setText("💣");
+                botones[coordX][coordY].setId(-1);
+            }
+        } else if (tam==12) {
+            for (int i = 0; i<30; i++) {
+                Random r = new Random();
+                int coordY = r.nextInt(((tam)-1)+1);
+                int coordX = r.nextInt(((tam)-1)+1);
+                botones[coordX][coordY].setText("💣");
+                botones[coordX][coordY].setId(-1);
+            }
+        } else if (tam==16) {
+            for (int i = 0; i<60; i++) {
+                Random r = new Random();
+                int coordY = r.nextInt(((tam)-1)+1);
+                int coordX = r.nextInt(((tam)-1)+1);
+                botones[coordX][coordY].setText("💣");
+                botones[coordX][coordY].setId(-1);
+            }
+        }
     }
+
+}

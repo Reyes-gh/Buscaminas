@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Buscaminas - Alex</string>
+    <string name="bomba">💣</string>
 </resources>
