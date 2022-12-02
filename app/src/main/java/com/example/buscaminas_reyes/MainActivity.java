@@ -84,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    ;
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         findViewById(R.id.action_settings);
