@@ -1,5 +1,7 @@
 package com.example.buscaminas_reyes;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -120,18 +122,23 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        int idbot = botones[finalI][finalJ].getId();
-                        if ((idbot==-1)){
+                        if ((botones[finalI][finalJ].getId()==-1)){
                             Context context = getApplicationContext();
-                            CharSequence text = "Hello toast!";
-                            int duration = Toast.LENGTH_SHORT;
+                            CharSequence text = "¡Qué pena! Has perdido";
+                            int duration = Toast.LENGTH_LONG;
+                            for (int i = 0; i <tam; i++){
+
+                                for (int j = 0; j <tam; j++){
+                                    if (botones[i][j].getId()==-1) botones[i][j].setText("💣");
+                                }
+                            }
 
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
+
                         } else {
-
+                        checkMinas(0, finalI, finalJ, tam, botones);
                         }
-
                     }
                 });
                 fila.addView(botones[i][j]);
@@ -145,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 Random r = new Random();
                 int coordY = r.nextInt(((tam)-1)+1);
                 int coordX = r.nextInt(((tam)-1)+1);
-                botones[coordX][coordY].setText("💣");
+
                 botones[coordX][coordY].setId(-1);
             }
         } else if (tam==12) {
@@ -153,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 Random r = new Random();
                 int coordY = r.nextInt(((tam)-1)+1);
                 int coordX = r.nextInt(((tam)-1)+1);
-                botones[coordX][coordY].setText("💣");
+
                 botones[coordX][coordY].setId(-1);
             }
         } else if (tam==16) {
@@ -161,10 +168,57 @@ public class MainActivity extends AppCompatActivity {
                 Random r = new Random();
                 int coordY = r.nextInt(((tam)-1)+1);
                 int coordX = r.nextInt(((tam)-1)+1);
-                botones[coordX][coordY].setText("💣");
+
                 botones[coordX][coordY].setId(-1);
             }
         }
     }
 
-}
+    public void checkMinas(int conteoBoom, int finalI, int finalJ, int tam, Button[][] botones){
+        int nuevaCordX = 0;
+        int nuevaCordY = 0;
+        if (conteoBoom!=8) {
+            try {
+                if (botones[finalI][finalJ].getId() == -1) {
+
+                    conteoBoom++;
+
+                } else {
+                    if (conteoBoom==1){
+                         nuevaCordX = finalI - 1;
+                         nuevaCordY = finalJ - 1;
+                    } else if (conteoBoom==2){
+                         nuevaCordX = finalI;
+                         nuevaCordY = finalJ - 1;
+                    } else if (conteoBoom==3){
+                         nuevaCordX = finalI + 1;
+                         nuevaCordY = finalJ - 1;
+                    } else if (conteoBoom==4) {
+                         nuevaCordX = finalI - 1;
+                         nuevaCordY = finalJ;
+                    } else if (conteoBoom==5) {
+                         nuevaCordX = finalI + 1;
+                         nuevaCordY = finalJ;
+                    } else if (conteoBoom==6) {
+                        nuevaCordX = finalI - 1;
+                        nuevaCordY = finalJ + 1;
+                    } else if (conteoBoom==7) {
+                        nuevaCordX = finalI ;
+                        nuevaCordY = finalJ + 1;
+                    } else {
+                        nuevaCordX = finalI + 1;
+                        nuevaCordY = finalJ + 1;
+                    }
+                    checkMinas(conteoBoom, nuevaCordX, nuevaCordY, tam, botones);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+                botones[finalI][finalJ].setText(String.valueOf(conteoBoom));
+                conteoBoom = 0;
+
+        }
+    }
+
