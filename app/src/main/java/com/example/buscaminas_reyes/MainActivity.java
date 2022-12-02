@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Instrucciones");
         builder.setMessage("Para ganar debes seguir las reglas del buscaminas normal, es decir, intenta descubrir el tablero sin explotar ninguna mina!" +
-                "Para Seleccionar una dificultad, pulsa los tres botones de la esquina superior derecha y elige un tamaño de tablero.");
+                "\n\nPara Seleccionar una dificultad, pulsa los tres botones de la esquina superior derecha y elige un tamaño de tablero.");
         builder.setPositiveButton("De Acuerdo!", null);
 
 
