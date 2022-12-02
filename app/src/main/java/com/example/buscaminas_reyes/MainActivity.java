@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int victoria = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                             botones[finalI][finalJ].setBackgroundColor(Color.GRAY);
                             botones[finalI][finalJ].setTextColor(Color.RED);
                         } else if((botones[finalI][finalJ].getId() == 0)){
-
+                            botones[finalI][finalJ].setId(-2);
                             try {
 
                                 int cont = 0;
@@ -180,6 +182,72 @@ public class MainActivity extends AppCompatActivity {
 
 
                         }
+
+
+
+                        if (tam == 8) {
+                            for (int i = 0; i < tam; i++) {
+
+                                for (int j = 0; j < tam; j++) {
+
+                                    if (botones[i][j].getId()==-1&&botones[i][j].getText()=="\uD83D\uDEA9") victoria++;
+
+                                }
+
+                            }
+
+                            if (victoria == 10) {
+
+                                LinearLayout ll1 = findViewById(R.id.linear1);
+                                ll1.removeAllViewsInLayout();
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Has ganado", 2);
+                                toast.show();
+
+
+                            }
+
+                        } else if (tam == 12) {
+                            for (int i = 0; i < tam; i++) {
+
+                                for (int j = 0; j < tam; j++) {
+
+                                    if (botones[i][j].getId()==-1&&botones[i][j].getText()=="\uD83D\uDEA9") victoria++;
+
+                                }
+
+                            }
+                            if (victoria == 30) {
+
+                                LinearLayout ll = findViewById(R.id.linear1);
+                                ll.removeAllViewsInLayout();
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Has ganado", 2);
+                                toast.show();
+
+                            }
+                        } else if (tam == 16) {
+                            for (int i = 0; i < tam; i++) {
+
+                                for (int j = 0; j < tam; j++) {
+
+                                    if (botones[i][j].getId()==-1&&botones[i][j].getText()=="\uD83D\uDEA9") victoria++;
+
+                                }
+
+                            }
+
+                            if (victoria == 60) {
+
+                                LinearLayout ll1 = findViewById(R.id.linear1);
+                                ll1.removeAllViewsInLayout();
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Has ganado", 2);
+                                toast.show();
+
+                            }
+                        }
+
                     }
                 });
                 fila.addView(botones[i][j]);
@@ -245,14 +313,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         try {
-        // public void checkMinas(int conteoBoom, int finalI, int finalJ, int tam, Button[][] botones){
-
-                //   if (botones[finalI-1][finalJ-1].getId() == -1) {
-                //         conteoBoom++;
-                //       } else {
-
-                //             checkMinas(conteoBoom, finalI-1, finalJ-1, tam, botones);
-                //          }
 
                 if (botones[x][y].getId() == 0 && botones[x][y].getText()!="\uD83D\uDEA9") {
 
